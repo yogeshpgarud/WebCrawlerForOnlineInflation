@@ -25,7 +25,7 @@ def get_file_names(bucket_name,prefix):
 #Return laptop_avg_prices_per_year
 def laptop_categories_avg_price(price_level):
     avg_price_per_year = []
-    years = ["2017","2018","2019","2020"]
+    years = ["2018"]
     for yr in years:
         #print(yr)
         highlevel = price_level['year'] == yr
@@ -106,7 +106,7 @@ def main():
     mid_level_laptops=[round(num, 1) for num in mid_level_laptops]
     high_level_laptops=[round(num, 1) for num in high_level_laptops]
     
-    laptops = {'Year':years,'Low-Level':affordable_laptops,'Mid-Level':mid_level_laptops,'High-Level':high_level_laptops}
+    laptops = {'Year':year,'Low-Level':affordable_laptops,'Mid-Level':mid_level_laptops,'High-Level':high_level_laptops}
     
     laptop_prices = pd.DataFrame(laptops, columns = ['Year', 'Low-Level','Mid-Level','High-Level'])
     laptop_prices.to_csv("dashapp/datasets/laptop_trends_2017-2020.csv",index=True)
