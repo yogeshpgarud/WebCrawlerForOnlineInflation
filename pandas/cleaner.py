@@ -55,6 +55,7 @@ def main():
         dataframes.append(df)
     
     #Cleaning the pandas dataframes
+    CleanDF = pd.DataFrame()
     for df in dataframes:
         #Dropping rows without Price information
         no_price = df[df.Price.astype(bool)]
