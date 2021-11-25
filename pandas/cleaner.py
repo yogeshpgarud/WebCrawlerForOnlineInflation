@@ -40,7 +40,7 @@ def main():
 
     #Get file names
     for yr in year:
-        filenames[yr] = get_file_names(bucket_name='output-east-2-usama',prefix = 'walmart_parquet_'+yr)
+        filenames[yr] = get_file_names(bucket_name='napa-webcrawler-datapipeline',prefix = 'walmart_parquet_'+yr)
         #First file is not parquet file
         filenames[yr].pop(0)
         #print(filenames)
@@ -48,7 +48,7 @@ def main():
     #Creating pandas dataframes
     dataframes = []
     for yr in year:
-        data = [pd.read_parquet("s3://output-east-2-usama/"+f) for f in filenames[yr]]
+        data = [pd.read_parquet("s3://napa-webcrawler-datapipeline/"+f) for f in filenames[yr]]
         df = pd.concat(data,ignore_index=True)
         #inserting a yr column
         df.insert(2,'year',yr)
