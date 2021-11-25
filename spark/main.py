@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup
 from bs4.dammit import EncodingDetector
 import argparse
 
+
 def getComLineArgs():
     parser = argparse.ArgumentParser()
     parser.add_argument("--input_file", "-in", type=str, default="", help="Input file name") 
@@ -81,14 +82,10 @@ def fetch_process_warc_records(rows):
 def main():
 
     args = getComLineArgs()
-    conf = SparkConf().setAll([("spark.executor.memory", "10g"),
-    ("spark.executor.instances", "8"),
-    ("spark.executor.cores", "3"),
-    ("spark.dynamicAllocation.enabled", "true"),])
-    
+    conf = SparkConf().setAll([("spark.dynamicAllocation.enabled", "true"),])
     session = SparkSession.builder.master("yarn").config(conf=conf).getOrCreate() #Create Spark Session
     
-    input_path = "s3://walmart-east-2-usama/%s" % (args['input_file'])
+    input_path = "s3://napa-webcrawler-datapipeline/%s" % (args['input_file'])
     sqldf = session.read.format("parquet").option("header", True).load(input_path+'/*')
     
     #Create rdd of the 1000 rows selected and manually repartition to avoid skew
@@ -100,7 +97,7 @@ def main():
      
     schemaProduct = sqlContext.createDataFrame(products,['Product','Price'])
     #Write to parquet format
-    output_path = "s3://output-east-2-usama/%s/" % (args['output_path'])
+    output_path = "s3://napa-webcrawler-datapipeline/%s/" % (args['output_path'])
     schemaProduct.write.parquet(output_path)
 
 if __name__ == '__main__':
