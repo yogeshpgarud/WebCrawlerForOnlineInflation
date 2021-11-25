@@ -98,7 +98,7 @@ def main():
     schemaProduct = sqlContext.createDataFrame(products,['Product','Price'])
     #Write to parquet format
     output_path = "s3://napa-webcrawler-datapipeline/%s/" % (args['output_path'])
-    schemaProduct.write.parquet(output_path)
+    schemaProduct.write.mode("overwrite",True).parquet(output_path)
 
 if __name__ == '__main__':
     #start_time = time.time()
