@@ -36,7 +36,7 @@ def laptop_categories_avg_price(price_level):
 
 def main():
     filenames=defaultdict(list)
-    year = ["2016","2017","2018","2019","2020"]
+    year = ["2018"]
 
     #Get file names
     for yr in year:
